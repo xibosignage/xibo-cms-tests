@@ -1,0 +1,16 @@
+{
+    "name": "xibo",
+    "version": "1.7.0-alpha",
+    "description": "Xibo Digital Signage - Test Suite",
+    "main": "xibo",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "dependencies":{
+        "webdriverio":"*",
+        "cucumber":"*",
+        "selenium-standalone":"*"
+    },
+    "author": "Spring Signage Ltd and the Xibo Developers",
+    "license": "AGPL-3.0"
+}

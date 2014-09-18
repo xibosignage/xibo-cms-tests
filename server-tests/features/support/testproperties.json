@@ -1,0 +1,9 @@
+{
+    "logLevel": "silent",
+
+    "host": "127.0.0.1",
+
+    "browser": "firefox",
+
+    "url": "http://172.28.128.4/index.php"
+}
