@@ -4,26 +4,43 @@ module.exports = function () {
     var PROPERTIES = require('../support/testproperties.json');
     var assert = require("assert");
 
-    /* "<Given> I visit the Xibo CMS" */
-    this.Given(/^I visit $/, function (callback) {
-        console.log("Visiting " + PROPERTIES.url);
-
-        this
-            .init()
-            .url(PROPERTIES.url, callback);
-    });
-
     /* "<Given> I visit <url>" */
     this.Given(/^I visit (.*)$/, function (url, callback) {
 
-        if (url == "the Xibo CMS")
+        if (url == "the Xibo CMS") {
+            
             url = PROPERTIES.url;
+            this
+                .init()
+                .url(url, callback);
+
+            return;
+        }
+        else if ("the schedule")
+            url = PROPERTIES.url + "?p=schedule";
         else
             url = PROPERTIES.url + url;
 
-        this
-            .init()
-            .url(url, callback);
+        this.url(url, callback);
+    });
+
+    /* "<Given>I am logged in as a <usertype>" */
+    this.Given(/^I am logged in as a (.*)$/, function (userType, callback) {
+
+        var username = "dan";
+        var password = "dan";
+
+        this.waitFor("#login-form", 3000, function (err, found) {
+
+            if (!err) {
+                this.setValue("#username", username);
+                this.setValue("#password", password);
+                this.click("#login-form button", callback);
+                return;
+            }
+
+            callback.fail(new Error('Login form was not found after 3s'));
+        });
     });
 
     /* "<When> I enter <text> into <inputId>" */
@@ -53,6 +70,10 @@ module.exports = function () {
     });
 
     this.When(/^the '(.*)' form is visible$/, function (link, callback) {
+        this.isVisible("#" + link, callback);
+    });
+
+    this.Then(/^the '(.*)' is visible$/, function (link, callback) {
         this.isVisible("#" + link, callback);
     });
 
